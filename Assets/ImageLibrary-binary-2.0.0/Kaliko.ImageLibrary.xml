@@ -1,0 +1,647 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Kaliko.ImageLibrary</name>
+  </assembly>
+  <members>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.#ctor(System.Drawing.Image)">
+      <summary>Create a KalikoImage from a System.Drawing.Image.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.#ctor(System.Int32,System.Int32)">
+      <summary>Create a KalikoImage with a defined width and height.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.#ctor(System.Drawing.Size)">
+      <summary>Create a KalikoImage with a defined width and height.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.#ctor(System.Drawing.Size,System.Drawing.Color)">
+      <summary>Create a KalikoImage with a defined width, height and background color.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.#ctor(System.Int32,System.Int32,System.Drawing.Color)">
+      <summary>Create a KalikoImage with a defined width, height and background color.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.#ctor(System.String)">
+      <summary>Create a KalikoImage by loading an image from either disk or web URL.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.#ctor(System.IO.Stream)">
+      <summary>Create a KalikoImage from a stream.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.ApplyFilter(Kaliko.ImageLibrary.Filters.IFilter)">
+      <summary>Apply a filter to the current Image.</summary>
+      <param name="filter">Any filter that supports the IFilter interface</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.Clear(System.Drawing.Color)">
+      <summary>Clear the image and set background image to the specified color.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.Clone">
+      <summary>Create a new image as a clone.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.Crop(System.Int32,System.Int32,System.Int32,System.Int32)">
+      <summary>Crop the image into the given dimensions.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.Finalize">
+      <summary>Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.LoadImageFromUrl(System.String)">
+      <summary>Load an image from an URL</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.Resize(System.Int32,System.Int32)">
+      <summary>Resizes the image without any <span lang="en" id="result_box" class="short_text" xml:lang="en"><span class="hps alt-edited">consideration of the current ratio.
+If you wish to make a ratio locked resize use Scale Method
+instead.</span></span></summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.SaveImage(System.String,System.Drawing.Imaging.ImageFormat)">
+      <summary>Generic method that will save the image in the specified ImageFormat.</summary>
+      <param name="format">Image format to save the file in, for example ImageFormat.Tiff</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.Scale(Kaliko.ImageLibrary.Scaling.ScalingBase)">
+      <summary>Scale the image using a defined scaling engine which can be CropScaling Class will crop the image so that the final
+result always has the given dimension, <see cref="T:Kaliko.ImageLibrary.Scaling.FitScaling">FitScaling Class</see> will ensure that the complete image is visible inside the
+given dimension or <see cref="T:Kaliko.ImageLibrary.Scaling.PadScaling">PadScaling Class</see> that will pad the image so that it cover the given dimension.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.SetFont(System.String,System.Single,System.Drawing.FontStyle)">
+      <summary>Set the font that will be used for text operations.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.StreamGif(System.String)">
+      <summary>Save image to the response stream in GIF-format. Ideal for sending realtime generated images to the web client requesting it.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.StreamJpg(System.Int64,System.String)">
+      <summary>Save image to the response stream in JPG-format. Ideal for sending realtime generated images to the web client requesting it.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.StreamPng(System.String)">
+      <summary>Save image to the response stream in PNG-format. Ideal for sending realtime generated images to the web client requesting it.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.BlitFill(System.String)">
+      <summary>Loads the defined image and use it as a pattern to fill the image (will be tiled if the destination image is larger than the source image).</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.BlitFill(Kaliko.ImageLibrary.KalikoImage)">
+      <summary>Uses the defined image as a pattern to fill the image (will be tiled if the destination image is larger than the source image)..</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.BlitFill(System.Drawing.Image)">
+      <summary>Uses the defined image as a pattern to fill the image (will be tiled if the destination image is larger than the source image)..</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.BlitImage(System.String)">
+      <summary>Will load an image and place it on the destination image at top left corner.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.BlitImage(System.String,System.Int32,System.Int32)">
+      <summary>Will load an image and place it on the destination image at the defined coordinates.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.BlitImage(Kaliko.ImageLibrary.KalikoImage)">
+      <summary>Will take the source image and place it on the destination image at top left corner.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.BlitImage(Kaliko.ImageLibrary.KalikoImage,System.Int32,System.Int32)">
+      <summary>Will take the source image and place it on the destination image at the defined coordinates.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.BlitImage(System.Drawing.Image)">
+      <summary>Will take the source image and place it on the destination image at top left corner.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.BlitImage(System.Drawing.Image,System.Int32,System.Int32)">
+      <summary>Will take the source image and place it on the destination image at the defined coordinates.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.GradientFill(System.Drawing.Color,System.Drawing.Color)">
+      <summary>Makes a gradient fill top to bottom from one color to another.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.GradientFill(System.Drawing.Point,System.Drawing.Point,System.Drawing.Color,System.Drawing.Color)">
+      <summary>Makes a gradient fill from point 1 to point 2 from one color to another.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.LoadImage(System.String)">
+      <summary>Load an image from local disk</summary>
+      <param name="fileName">File path</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.LoadImage(System.IO.Stream)">
+      <summary>Load an image from a stream object (MemoryStream, Stream etc)</summary>
+      <param name="stream">Pointer to stream</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.SaveBmp(System.String)">
+      <summary>Save image to file in BMP-format.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.SaveGif(System.String)">
+      <summary>Save image to file in GIF-format.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.SaveJpg(System.IO.Stream,System.Int64)">
+      <param name="stream">Stream to save the image to</param>
+      <param name="quality">Compression quality setting (0-100)</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.SaveJpg(System.String,System.Int64)">
+      <summary>Save image to file in JPG-format.</summary>
+      <param name="fileName">Name of the file</param>
+      <param name="quality">Compression quality setting (0-100)</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.SavePng(System.String)">
+      <summary>Save image to file in PNG-format.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.WriteText(System.String,System.Int32,System.Int32)">
+      <summary>Write text to image using the font assigned using SetFont
+Method.</summary>
+      <param name="text">Text that will be written on image</param>
+      <param name="x">Left-most position of the text</param>
+      <param name="y">Top-most position of the text</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.KalikoImage.WriteText(System.String,System.Int32,System.Int32,System.Single)">
+      <summary>Write text to image using the font assigned using SetFont
+Method rotated in the defined angle.</summary>
+      <param name="text">Text that will be written on image</param>
+      <param name="x">Left-most position of the text</param>
+      <param name="y">Top-most position of the text</param>
+      <param name="angle">Angle to rotate the text to</param>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.BackgroundColor">
+      <summary>Color used for background.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.ByteArray">
+      <summary>Byte array matching PixelFormat.Format32bppArgb (bgrA in real life).</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.Color">
+      <summary>Color used for graphical operations such as writing text on image.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.Height">
+      <summary>Image height.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.ImageRatio">
+      <summary>Width/height ratio of image.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.IndexedPalette">
+      <summary>Check if the current image has an indexed palette.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.IntArray">
+      <summary>Int array matching PixelFormat.Format32bppArgb (bgrA in real life)</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.IsLandscape">
+      <summary>Returns true if image has landscape ratio (wider than high).</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.IsPortrait">
+      <summary>Returns true if image has portrait ratio (higher than wide).</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.IsSquare">
+      <summary>Returns true if image has a 1:1 ratio (same width and height).</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.Size">
+      <summary>Size of the image</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.TextRenderingHint">
+      <summary>Rendering mode for text operations.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.KalikoImage.Width">
+      <summary>Image width.</summary>
+    </member>
+    <member name="T:Kaliko.ImageLibrary.ColorSpace.CIELab">
+      <summary>Structure to define CIE L*a*b*.</summary>
+    </member>
+    <member name="T:Kaliko.ImageLibrary.ColorSpace.CIEXYZ">
+      <summary>Structure to define CIE XYZ.</summary>
+    </member>
+    <member name="T:Kaliko.ImageLibrary.ColorSpace.CMYK">
+      <summary>Structure to define CMYK.</summary>
+    </member>
+    <member name="T:Kaliko.ImageLibrary.ColorSpace.HSB">
+      <summary>Structure to define HSB.</summary>
+    </member>
+    <member name="T:Kaliko.ImageLibrary.ColorSpace.HSL">
+      <summary>Structure to define HSL.</summary>
+    </member>
+    <member name="T:Kaliko.ImageLibrary.ColorSpace.RGB">
+      <summary>Structure to define RGB.</summary>
+    </member>
+    <member name="T:Kaliko.ImageLibrary.ColorSpace.YUV">
+      <summary>Structure to define YUV.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.CIELab.GetHashCode">
+      <summary>Serves as a hash function for a particular type.</summary>
+      <returns>A hash code for the current object.</returns>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.CIELab.A">
+      <summary>Gets or sets a component.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.CIELab.B">
+      <summary>Gets or sets a component.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.CIELab.L">
+      <summary>Gets or sets L component.</summary>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.ColorSpace.CIELab.Empty">
+      <summary>Gets an empty CIELab structure.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.CIEXYZ.GetHashCode">
+      <summary>Serves as a hash function for a particular type.</summary>
+      <returns>A hash code for the current object.</returns>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.CIEXYZ.X">
+      <summary>Gets or sets X component.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.CIEXYZ.Y">
+      <summary>Gets or sets Y component.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.CIEXYZ.Z">
+      <summary>Gets or sets Z component.</summary>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.ColorSpace.CIEXYZ.D65">
+      <summary>Gets the CIE D65 (white) structure.</summary>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.ColorSpace.CIEXYZ.Empty">
+      <summary>Gets an empty CIEXYZ structure.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.CMYK.#ctor(System.Double,System.Double,System.Double,System.Double)">
+      <summary>Creates an instance of a CMYK structure.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.CMYK.GetHashCode">
+      <summary>Serves as a hash function for a particular type.</summary>
+      <returns>A hash code for the current object.</returns>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.ColorSpace.CMYK.Empty">
+      <summary>Gets an empty CMYK structure;</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.HSB.#ctor(System.Double,System.Double,System.Double)">
+      <summary>Creates an instance of a HSB structure.</summary>
+      <param name="h">Hue value.</param>
+      <param name="s">Saturation value.</param>
+      <param name="b">Brightness value.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.HSB.GetHashCode">
+      <summary>Serves as a hash function for a particular type.</summary>
+      <returns>A hash code for the current object.</returns>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.HSB.Brightness">
+      <summary>Gets or sets the brightness component.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.HSB.Hue">
+      <summary>Gets or sets the hue component.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.HSB.Saturation">
+      <summary>Gets or sets saturation component.</summary>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.ColorSpace.HSB.Empty">
+      <summary>Gets an empty HSB structure;</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.HSL.#ctor(System.Double,System.Double,System.Double)">
+      <summary>Creates an instance of a HSL structure.</summary>
+      <param name="h">Hue value.</param>
+      <param name="s">Saturation value.</param>
+      <param name="l">Lightness value.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.HSL.GetHashCode">
+      <summary>Serves as a hash function for a particular type.</summary>
+      <returns>A hash code for the current object.</returns>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.HSL.Hue">
+      <summary>Gets or sets the hue component.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.HSL.Luminance">
+      <summary>Gets or sets the luminance component.</summary>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.ColorSpace.HSL.Saturation">
+      <summary>Gets or sets saturation component.</summary>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.ColorSpace.HSL.Empty">
+      <summary>Gets an empty HSL structure;</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.RGB.GetHashCode">
+      <summary>Serves as a hash function for a particular type.</summary>
+      <returns>A hash code for the current object.</returns>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.ColorSpace.RGB.Empty">
+      <summary>Gets an empty RGB structure;</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.YUV.#ctor(System.Double,System.Double,System.Double)">
+      <summary>Creates an instance of a YUV structure.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.YUV.GetHashCode">
+      <summary>Serves as a hash function for a particular type.</summary>
+      <returns>A hash code for the current object.</returns>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.ColorSpace.YUV.Empty">
+      <summary>Gets an empty YUV structure.</summary>
+    </member>
+    <member name="T:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper">
+      <summary>Provides methods to convert from a color space to an other.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.CMYKtoHSB(System.Double,System.Double,System.Double,System.Double)">
+      <summary>Converts CMYK to HSB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.CMYKtoHSL(System.Double,System.Double,System.Double,System.Double)">
+      <summary>Converts CMYK to HSL.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.CMYKtoYUV(System.Double,System.Double,System.Double,System.Double)">
+      <summary>Converts CMYK to YUV.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.GetWheelColors(System.Int32)">
+      <summary>Gets visible colors (color wheel).</summary>
+      <param name="alpha">The alpha value used for each colors.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HexToColor(System.String)">
+      <summary>Converts a Hex color to a .net Color.</summary>
+      <param name="hexColor">The desired hexadecimal color to convert.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSBtoCMYK(System.Double,System.Double,System.Double)">
+      <summary>Converts HSB to CMYK.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSBtoHSL(System.Double,System.Double,System.Double)">
+      <summary>Converts HSB to HSL.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSBtoYUV(System.Double,System.Double,System.Double)">
+      <summary>Converts HSB to CMYK.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSLtoCMYK(System.Double,System.Double,System.Double)">
+      <summary>Converts HSL to CMYK.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSLtoHSB(System.Double,System.Double,System.Double)">
+      <summary>Converts HSL to HSB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSLtoYUV(System.Double,System.Double,System.Double)">
+      <summary>Converts HSL to YUV.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.YUVtoCMYK(System.Double,System.Double,System.Double)">
+      <summary>Converts YUV to CMYK.</summary>
+      <param name="y">Y must be in [0, 1].</param>
+      <param name="u">U must be in [-0.436, +0.436].</param>
+      <param name="v">V must be in [-0.615, +0.615].</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.YUVtoHSB(System.Double,System.Double,System.Double)">
+      <summary>Converts YUV to HSB.</summary>
+      <param name="y">Y must be in [0, 1].</param>
+      <param name="u">U must be in [-0.436, +0.436].</param>
+      <param name="v">V must be in [-0.615, +0.615].</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.YUVtoHSL(System.Double,System.Double,System.Double)">
+      <summary>Converts YUV to HSL.</summary>
+      <param name="y">Y must be in [0, 1].</param>
+      <param name="u">U must be in [-0.436, +0.436].</param>
+      <param name="v">V must be in [-0.615, +0.615].</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.CMYKtoColor(System.Single,System.Single,System.Single,System.Single)">
+      <summary>Converts CMYK to RGB.</summary>
+      <param name="c">Cyan value (must be between 0 and 1).</param>
+      <param name="m">Magenta value (must be between 0 and 1).</param>
+      <param name="y">Yellow value (must be between 0 and 1).</param>
+      <param name="k">Black value (must be between 0 and 1).</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.CMYKtoColor(System.Double,System.Double,System.Double,System.Double)">
+      <summary>Converts CMYK to RGB.</summary>
+      <param name="c">Cyan value (must be between 0 and 1).</param>
+      <param name="m">Magenta value (must be between 0 and 1).</param>
+      <param name="y">Yellow value (must be between 0 and 1).</param>
+      <param name="k">Black value (must be between 0 and 1).</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.CMYKtoColor(Kaliko.ImageLibrary.ColorSpace.CMYK)">
+      <summary>Converts CMYK to RGB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.CMYKtoRGB(System.Double,System.Double,System.Double,System.Double)">
+      <summary>Converts CMYK to RGB.</summary>
+      <param name="c">Cyan value (must be between 0 and 1).</param>
+      <param name="m">Magenta value (must be between 0 and 1).</param>
+      <param name="y">Yellow value (must be between 0 and 1).</param>
+      <param name="k">Black value (must be between 0 and 1).</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.CMYKtoRGB(Kaliko.ImageLibrary.ColorSpace.CMYK)">
+      <summary>Converts CMYK to RGB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.GetColorDistance(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+      <summary>Gets the "distance" between two colors. RGB colors must be normalized (eg. values in [0.0, 1.0]).</summary>
+      <param name="r1">First color red component.</param>
+      <param name="g1">First color green component.</param>
+      <param name="b1">First color blue component.</param>
+      <param name="r2">Second color red component.</param>
+      <param name="g2">Second color green component.</param>
+      <param name="b2">Second color blue component.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.GetColorDistance(System.Double[],System.Double[])">
+      <summary>Gets the "distance" between two colors. RGB colors must be normalized (eg. values in [0.0, 1.0]).</summary>
+      <param name="color1">First color [r,g,b]</param>
+      <param name="color2">Second color [r,g,b]</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.GetColorDistance(System.Drawing.Color,System.Drawing.Color)">
+      <summary>Gets the "distance" between two colors.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.GetSpectrumColors(System.Int32)">
+      <summary>Gets visible spectrum colors.</summary>
+      <param name="alpha">The alpha value used for each colors.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.GetSpectrumColors">
+      <summary>Gets visible spectrum colors.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSBtoColor(Kaliko.ImageLibrary.ColorSpace.HSB)">
+      <summary>Converts HSB to Color.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSBtoColor(System.Double,System.Double,System.Double)">
+      <summary>Converts HSB to a .net Color.</summary>
+      <param name="h">Hue value (must be between 0 and 360).</param>
+      <param name="s">Saturation value (must be between 0 and 1).</param>
+      <param name="b">Brightness value (must be between 0 and 1).</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSBtoColor(System.Int32,System.Int32,System.Int32)">
+      <summary>Converts HSB to Color.</summary>
+      <param name="h">Hue value.</param>
+      <param name="s">Saturation value.</param>
+      <param name="b">Brightness value.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSBtoRGB(Kaliko.ImageLibrary.ColorSpace.HSB)">
+      <summary>Converts HSB to RGB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSBtoRGB(System.Double,System.Double,System.Double)">
+      <summary>Converts HSB to RGB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSLtoColor(System.Double,System.Double,System.Double)">
+      <summary>Converts HSL to .net Color.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSLtoColor(Kaliko.ImageLibrary.ColorSpace.HSL)">
+      <summary>Converts HSL to .net Color.</summary>
+      <param name="hsl">The HSL structure to convert.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSLtoRGB(System.Double,System.Double,System.Double)">
+      <summary>Converts HSL to RGB.</summary>
+      <param name="h">Hue, must be in [0, 360].</param>
+      <param name="s">Saturation, must be in [0, 1].</param>
+      <param name="l">Luminance, must be in [0, 1].</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.HSLtoRGB(Kaliko.ImageLibrary.ColorSpace.HSL)">
+      <summary>Converts HSL to RGB.</summary>
+      <param name="hsl">The HSL structure to convert.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.LabtoRGB(System.Double,System.Double,System.Double)">
+      <summary>Converts CIELab to RGB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.LabtoRGB(Kaliko.ImageLibrary.ColorSpace.CIELab)">
+      <summary>Converts CIELab to RGB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.LabtoXYZ(System.Double,System.Double,System.Double)">
+      <summary>Converts CIELab to CIEXYZ.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.LabtoXYZ(Kaliko.ImageLibrary.ColorSpace.CIELab)">
+      <summary>Converts CIELab to CIEXYZ.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoCMYK(System.Int32,System.Int32,System.Int32)">
+      <summary>Converts RGB to CMYK</summary>
+      <param name="red">Red vaue must be in [0, 255].</param>
+      <param name="green">Green vaue must be in [0, 255].</param>
+      <param name="blue">Blue vaue must be in [0, 255].</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoCMYK(System.Drawing.Color)">
+      <summary>Converts RGB to CMYK</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoCMYK(Kaliko.ImageLibrary.ColorSpace.RGB)">
+      <summary>Converts RGB to CMYK</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBToHex(System.Int32,System.Int32,System.Int32)">
+      <summary>Converts a RGB color format to an hexadecimal color.</summary>
+      <param name="r">The Red value.</param>
+      <param name="g">The Green value.</param>
+      <param name="b">The Blue value.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBToHex(System.Drawing.Color)">
+      <summary>Converts a RGB color format to an hexadecimal color.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoHSB(System.Int32,System.Int32,System.Int32)">
+      <summary>Converts RGB to HSB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoHSB(Kaliko.ImageLibrary.ColorSpace.RGB)">
+      <summary>Converts RGB to HSB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoHSB(System.Drawing.Color)">
+      <summary>Converts RGB to HSB.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoHSL(System.Int32,System.Int32,System.Int32)">
+      <summary>Converts RGB to HSL.</summary>
+      <param name="red">Red value, must be in [0,255].</param>
+      <param name="green">Green value, must be in [0,255].</param>
+      <param name="blue">Blue value, must be in [0,255].</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoHSL(Kaliko.ImageLibrary.ColorSpace.RGB)">
+      <summary>Converts RGB to HSL.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoHSL(System.Drawing.Color)">
+      <summary>Converts Color to HSL.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoLab(System.Int32,System.Int32,System.Int32)">
+      <summary>Converts RGB to CIELab.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoLab(Kaliko.ImageLibrary.ColorSpace.RGB)">
+      <summary>Converts RGB to CIELab.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoLab(System.Drawing.Color)">
+      <summary>Converts RGB to CIELab.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoXYZ(System.Int32,System.Int32,System.Int32)">
+      <summary>Converts RGB to CIE XYZ (CIE 1931 color space)</summary>
+      <param name="red">Red must be in [0, 255].</param>
+      <param name="green">Green must be in [0, 255].</param>
+      <param name="blue">Blue must be in [0, 255].</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoXYZ(Kaliko.ImageLibrary.ColorSpace.RGB)">
+      <summary>Converts RGB to CIEXYZ.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoXYZ(System.Drawing.Color)">
+      <summary>Converts RGB to CIEXYZ.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoYUV(System.Int32,System.Int32,System.Int32)">
+      <summary>Converts RGB to YUV.</summary>
+      <param name="red">red must be in [0, 255].</param>
+      <param name="green">green must be in [0, 255].</param>
+      <param name="blue">blue must be in [0, 255].</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoYUV(System.Drawing.Color)">
+      <summary>Converts RGB to YUV.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.RGBtoYUV(Kaliko.ImageLibrary.ColorSpace.RGB)">
+      <summary>Converts RGB to YUV.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.XYZtoLab(System.Double,System.Double,System.Double)">
+      <summary>Converts CIEXYZ to CIELab structure.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.XYZtoLab(Kaliko.ImageLibrary.ColorSpace.CIEXYZ)">
+      <summary>Converts CIEXYZ to CIELab structure.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.XYZtoRGB(System.Double,System.Double,System.Double)">
+      <summary>Converts CIEXYZ to RGB structure.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.XYZtoRGB(Kaliko.ImageLibrary.ColorSpace.CIEXYZ)">
+      <summary>Converts CIEXYZ to RGB structure.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.YUVtoColor(System.Double,System.Double,System.Double)">
+      <summary>Converts YUV to a .net Color.</summary>
+      <param name="y">Y must be in [0, 1].</param>
+      <param name="u">U must be in [-0.436, +0.436].</param>
+      <param name="v">V must be in [-0.615, +0.615].</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.YUVtoColor(Kaliko.ImageLibrary.ColorSpace.YUV)">
+      <summary>Converts YUV to a .net Color.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.YUVtoRGB(System.Double,System.Double,System.Double)">
+      <summary>Converts YUV to RGB.</summary>
+      <param name="y">Y must be in [0, 1].</param>
+      <param name="u">U must be in [-0.436, +0.436].</param>
+      <param name="v">V must be in [-0.615, +0.615].</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.ColorSpace.ColorSpaceHelper.YUVtoRGB(Kaliko.ImageLibrary.ColorSpace.YUV)">
+      <summary>Converts YUV to RGB.</summary>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.Filters.ConvolveFilter.EdgeMode.Zero">
+      <summary>Treat pixels off the edge as zero.</summary>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.Filters.ConvolveFilter.EdgeMode.Clamp">
+      <summary>Clamp pixels off the edge to the nearest edge.</summary>
+    </member>
+    <member name="F:Kaliko.ImageLibrary.Filters.ConvolveFilter.EdgeMode.Wrap">
+      <summary>Wrap pixels off the edge to the opposite edge.</summary>
+    </member>
+    <member name="T:Kaliko.ImageLibrary.Filters.BrightnessFilter">
+      <summary>Simple filter for adjusting brightness in images.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.BrightnessFilter.#ctor(System.Int32)">
+      <param name="changeInBrightness">The amount of change to be applied to the brightness. Entered as either a positive - to make it brighter - or negative - to make it darker - value (zero means
+no change).</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.BrightnessFilter.Run(Kaliko.ImageLibrary.KalikoImage)">
+      <summary>Execute the filter.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.ConvolveFilter.#ctor">
+      <summary>Construct a filter with a null kernel. This is only useful if you're going to change the kernel later on.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.ConvolveFilter.#ctor(System.Single[])">
+      <summary>Construct a filter with the given 3x3 kernel.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.ConvolveFilter.#ctor(System.Int32,System.Int32,System.Single[])">
+      <summary>Construct a filter with the given kernel.</summary>
+      <param name="rows">The number of rows in the kernel.</param>
+      <param name="cols">The number of columns in the kernel.</param>
+      <param name="matrix">An array of rows*cols floats containing the kernel.</param>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.ConvolveFilter.#ctor(Kaliko.ImageLibrary.Filters.Kernel)">
+      <summary>Construct a filter with the given 3x3 kernel.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.ConvolveFilter.ConvolveH(Kaliko.ImageLibrary.Filters.Kernel,System.Int32[],System.Int32[],System.Int32,System.Int32,System.Boolean,Kaliko.ImageLibrary.Filters.ConvolveFilter.EdgeMode)">
+      <summary>Convolve with a kernel consisting of one row.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.ConvolveFilter.ConvolveHV(Kaliko.ImageLibrary.Filters.Kernel,System.Int32[],System.Int32[],System.Int32,System.Int32,System.Boolean,Kaliko.ImageLibrary.Filters.ConvolveFilter.EdgeMode)">
+      <summary>Convolve with a 2D kernel.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.ConvolveFilter.ConvolveV(Kaliko.ImageLibrary.Filters.Kernel,System.Int32[],System.Int32[],System.Int32,System.Int32,System.Boolean,Kaliko.ImageLibrary.Filters.ConvolveFilter.EdgeMode)">
+      <summary>Convolve with a kernel consisting of one column.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.ConvolveFilter.Convolve(Kaliko.ImageLibrary.Filters.Kernel,System.Int32[],System.Int32[],System.Int32,System.Int32,Kaliko.ImageLibrary.Filters.ConvolveFilter.EdgeMode)">
+      <summary>Convolve a block of pixels.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.ConvolveFilter.Convolve(Kaliko.ImageLibrary.Filters.Kernel,System.Int32[],System.Int32[],System.Int32,System.Int32,System.Boolean,Kaliko.ImageLibrary.Filters.ConvolveFilter.EdgeMode)">
+      <summary>Convolve a block of pixels</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.GaussianBlurFilter.ConvolveAndTranspose(Kaliko.ImageLibrary.Filters.Kernel,System.Int32[],System.Int32[],System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,Kaliko.ImageLibrary.Filters.ConvolveFilter.EdgeMode)">
+      <summary>Blur and transpose a block of ARGB pixels.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.GaussianBlurFilter.CreateKernel(System.Single)">
+      <summary>Make a Gaussian blur kernel.</summary>
+      <returns>the kernel</returns>
+      <param name="radius">the blur radius</param>
+    </member>
+    <member name="P:Kaliko.ImageLibrary.Filters.GaussianBlurFilter.Radius">
+      <summary>The radius of the kernel, and hence the amount of blur. The bigger the radius, the longer this filter will take.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Filters.PixelUtils.Clamp(System.Int32)">
+      <summary>Clamp a value to the range 0..255</summary>
+    </member>
+    <member name="T:Kaliko.ImageLibrary.Scaling.ScalingBase">
+      <summary>Abstract class used by scaling engines.</summary>
+    </member>
+    <member name="M:Kaliko.ImageLibrary.Scaling.ScalingBase.Scale(Kaliko.ImageLibrary.KalikoImage)">
+      <summary>Core function that applies the scaling to the image.</summary>
+      <returns>Scaled image</returns>
+      <param name="sourceImage">Image to be scaled</param>
+    </member>
+  </members>
+</doc>
