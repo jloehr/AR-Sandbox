@@ -18,8 +18,8 @@ public class DepthMesh : MonoBehaviour
     public int[] newTriangles;
     Mesh MyMesh;
 
-    public int Width;
-    public int Height;
+    public int Width = 240;
+    public int Height = 240;
     public int OffsetX;
     public int OffsetY;
     public int MinValue = 0;
@@ -30,27 +30,45 @@ public class DepthMesh : MonoBehaviour
     short[] DepthImage;
     float[] FloatValues;
 
+    int WidthBuffer;
+    int HeightBuffer;
+
     // Use this for initialization
     void Start()
     {
-        float Aspect = (float)KinectWidth / (float)KinectHeight;
-        float SquarePixels = ushort.MaxValue * Aspect;
-        float FloatWidth = Mathf.Sqrt(SquarePixels);
-        float FloatHeight = FloatWidth / Aspect;
-        Width = Mathf.FloorToInt(FloatWidth);
-        Height = Mathf.FloorToInt(FloatHeight);
+        WidthBuffer = Width;
+        HeightBuffer = Height;
 
-        Debug.Log("W: " + Width + " - H: " + Height);
-        // W * H = ushort.MaxValue
-        // W = Aspect * H
-        //
-        // H = Max / W
-        // W = Aspect * max / W
-        // W² = Aspect * Max
-        // W = sqrt( Aspect * MAx)
-        // H = W / Aspect
+        MyMesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = MyMesh;
 
+        SetupArrays();
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (KinectDepth.pollDepth())
+        {
+            DepthImage = KinectDepth.depthImg;
+            CheckArrays();
+            CalculateFloatValues();
+            UpdateMesh();
+        }
+    }
+
+    void CheckArrays()
+    {
+        if((Width != WidthBuffer) || (Height != HeightBuffer))
+        {
+            SetupArrays();
+            WidthBuffer = Width;
+            HeightBuffer = Height;
+        }
+    }
+
+    void SetupArrays()
+    {
         FloatValues = new float[Width * Height];
         newVertices = new Vector3[Width * Height];
         newNormals = new Vector3[Width * Height];
@@ -86,31 +104,11 @@ public class DepthMesh : MonoBehaviour
             }
         }
 
-
-        MyMesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = MyMesh;
         MyMesh.vertices = newVertices;
         MyMesh.normals = newNormals;
         MyMesh.colors32 = newColors;
         MyMesh.uv = newUV;
         MyMesh.triangles = newTriangles;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (KinectDepth.pollDepth())
-        {
-            DepthImage = KinectDepth.depthImg;
-            CheckArrays();
-            CalculateFloatValues();
-            UpdateMesh();
-        }
-    }
-
-    void CheckArrays()
-    {
-
     }
 
    void CalculateFloatValues()
