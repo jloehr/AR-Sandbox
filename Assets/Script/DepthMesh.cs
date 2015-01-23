@@ -104,6 +104,7 @@ public class DepthMesh : MonoBehaviour
             }
         }
 
+        MyMesh.Clear();
         MyMesh.vertices = newVertices;
         MyMesh.normals = newNormals;
         MyMesh.colors32 = newColors;
