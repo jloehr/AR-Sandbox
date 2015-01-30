@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MeshCalibration : MonoBehaviour {
+public class MeshCalibration : MonoBehaviour
+{
 
     DepthMesh DepthMesh;
 
@@ -12,19 +13,21 @@ public class MeshCalibration : MonoBehaviour {
 
     int ClickCount = 0;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         DepthMesh = GetComponent<DepthMesh>();
         ClickCount = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    if(Input.GetMouseButtonDown(0))
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
             ProcessClick();
         }
-	}
+    }
 
     void ProcessClick()
     {
@@ -33,7 +36,7 @@ public class MeshCalibration : MonoBehaviour {
         Vector3 PositionOnMesh = ClickPosition - transform.position;
 
         //Set Variable
-        switch(ClickCount)
+        switch (ClickCount)
         {
             case 0: TopLeft = PositionOnMesh;
                 break;
@@ -59,16 +62,7 @@ public class MeshCalibration : MonoBehaviour {
 
         DepthMesh.OffsetX = Mathf.FloorToInt(Mathf.Min(TopLeft.x, BottomLeft.x)) + DepthMesh.OffsetX;
         DepthMesh.OffsetY = Mathf.FloorToInt(Mathf.Min(BottomLeft.y, BottomRight.y)) + DepthMesh.OffsetY;
-        DepthMesh.Height = Mathf.FloorToInt(Mathf.Max(TopLeft.y, TopRight.y) - Mathf.Min(BottomLeft.y, BottomRight.y)); 
+        DepthMesh.Height = Mathf.FloorToInt(Mathf.Max(TopLeft.y, TopRight.y) - Mathf.Min(BottomLeft.y, BottomRight.y));
         DepthMesh.Width = Mathf.FloorToInt(Mathf.Max(TopRight.x, BottomRight.x) - Mathf.Min(TopLeft.x, BottomLeft.x));
-
-      
-
-        /*
-        DepthMesh.Height = Mathf.FloorToInt(TopRight.y - BottomRight.y);
-        DepthMesh.Width = Mathf.FloorToInt(TopRight.x - TopLeft.x);
-        DepthMesh.OffsetX = Mathf.FloorToInt(TopLeft.x);
-        DepthMesh.OffsetY = Mathf.FloorToInt(TopLeft.y - DepthMesh.Height);
-         * */
     }
 }
