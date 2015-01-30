@@ -59,7 +59,7 @@ public class DepthMesh : MonoBehaviour
 
     void CheckArrays()
     {
-        if((Width != WidthBuffer) || (Height != HeightBuffer))
+        if ((Width != WidthBuffer) || (Height != HeightBuffer))
         {
             SetupArrays();
             WidthBuffer = Width;
@@ -76,11 +76,14 @@ public class DepthMesh : MonoBehaviour
         newUV = new Vector2[Width * Height];
         newTriangles = new int[(Width - 1) * (Height - 1) * 6];
 
+        Debug.Log(Width * Height);
+        Debug.Log(newTriangles.Length);
+
         for (int H = 0; H < Height; H++)
         {
             for (int W = 0; W < Width; W++)
             {
-                int Index = W + H * Width;
+                int Index = GetArrayIndex(W, H);
                 newVertices[Index] = new Vector3(W, H, 0f);
                 newNormals[Index] = new Vector3(0, 0, 1);
                 newColors[Index] = new Color32(0, 0, 0, 255);
@@ -112,7 +115,7 @@ public class DepthMesh : MonoBehaviour
         MyMesh.triangles = newTriangles;
     }
 
-   void CalculateFloatValues()
+    void CalculateFloatValues()
     {
         for (int H = 0; H < Height; H++)
         {
@@ -149,7 +152,7 @@ public class DepthMesh : MonoBehaviour
             }
         }
 
-   }
+    }
 
     void UpdateMesh()
     {
@@ -166,15 +169,16 @@ public class DepthMesh : MonoBehaviour
 
         MyMesh.vertices = newVertices;
         MyMesh.colors32 = newColors;
-
-        Debug.Log(MinValueBuffer + " - " + MaxValueBuffer);
+        MyMesh.RecalculateNormals();
     }
 
     void ProcessPixel(int W, int H)
     {
         int Index = GetArrayIndex(W, H);
         float FloatValue = FloatValues[Index];
+
         //Calc Normal
+        //newNormals[Index] = CalculateNormal(W, H, FloatValue);
 
         //Calc Position
         newVertices[Index].z = FloatValue * 100;
@@ -196,7 +200,7 @@ public class DepthMesh : MonoBehaviour
         int ImageW = OffsetX + W;
         int ImageH = OffsetY + H;
 
-        if((ImageW < 0) || (ImageW > KinectWidth) || (ImageH < 0) || (ImageH > KinectHeight))
+        if ((ImageW < 0) || (ImageW > KinectWidth) || (ImageH < 0) || (ImageH > KinectHeight))
         {
             return (int)short.MaxValue;
         }
@@ -213,8 +217,63 @@ public class DepthMesh : MonoBehaviour
             return Value;
         }
     }
+
+    /* Not needed since Unity provides a Recalculate Normals Funktion
+    Vector3 CalculateNormal(int W, int H, float VertexFloat)
+    {
+        int TopIndex = GetArrayIndex(W, H + 1);
+        int RightIndex = GetArrayIndex(W + 1, H);
+        int BottomIndex = GetArrayIndex(W, H - 1);
+        int LeftIndex = GetArrayIndex(W - 1, H);
+
+        Vector3 Normal = Vector3.zero;
+
+        //Get TopLeft
+        Normal += CalculateTriangleNormal(LeftIndex, -1, TopIndex, 1, false, VertexFloat);
+        //Get TopRight
+        Normal += CalculateTriangleNormal(RightIndex, 1, TopIndex, 1, true, VertexFloat);
+        //Get BottomLeft
+        Normal += CalculateTriangleNormal(LeftIndex, -1, BottomIndex, -1, false, VertexFloat);
+        //Get BottomRight
+        Normal += CalculateTriangleNormal(RightIndex, 1, BottomIndex, -1, true, VertexFloat);
+
+        return Normal.normalized;
+    }
+
+    Vector3 CalculateTriangleNormal(int XIndex, int XOffset, int YIndex, int YOffset, bool Swapped, float VertexFloat)
+    {
+        if((XIndex < 0) || (YIndex < 0))
+        {
+            return Vector3.zero;
+        }
+
+        if((XIndex >= FloatValues.Length) || (YIndex >= FloatValues.Length))
+        {
+            Debug.Log("OutofRange: " + FloatValues.Length + " - " + XIndex + " : " + YIndex);
+            Debug.Break();
+        }
+
+        Vector3 XVector = new Vector3(XOffset, 0, FloatValues[XIndex] - VertexFloat);
+        Vector3 YVector = new Vector3(0, YOffset, FloatValues[YIndex] - VertexFloat);
+
+        if(Swapped)
+        {
+            return Vector3.Cross(XVector, YVector).normalized;
+        }
+        else
+        {
+            return Vector3.Cross(YVector, XVector).normalized;
+        }
+    }
+    */
+
     int GetArrayIndex(int W, int H)
     {
+        if ((W < 0) || (W >= Width) || (H < 0) || (H >= Height))
+        {
+            return -1;
+        }
+
         return W + H * Width;
     }
 
