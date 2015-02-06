@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using AForge.Imaging.Filters;
+using AForge.Imaging;
 
 public class DepthMesh : MonoBehaviour
 {
@@ -28,16 +30,22 @@ public class DepthMesh : MonoBehaviour
     short MinValueBuffer;
     short MaxValueBuffer;
     short[] DepthImage;
+    short[] FilterdAndCroppedDepthImage;
     float[] FloatValues;
 
     int WidthBuffer;
     int HeightBuffer;
+
+    System.Drawing.Bitmap Bitmap;
+    GaussianBlur Blur = new GaussianBlur(4, 11);
 
     // Use this for initialization
     void Start()
     {
         WidthBuffer = Width;
         HeightBuffer = Height;
+
+        
 
         MyMesh = new Mesh();
         GetComponent<MeshFilter>().mesh = MyMesh;
@@ -52,6 +60,8 @@ public class DepthMesh : MonoBehaviour
         {
             DepthImage = KinectDepth.depthImg;
             CheckArrays();
+            CropImage();
+            FilerImage();
             CalculateFloatValues();
             UpdateMesh();
         }
@@ -69,12 +79,14 @@ public class DepthMesh : MonoBehaviour
 
     void SetupArrays()
     {
+        FilterdAndCroppedDepthImage = new short[Width * Height];
         FloatValues = new float[Width * Height];
         newVertices = new Vector3[Width * Height];
         newNormals = new Vector3[Width * Height];
         newColors = new Color32[Width * Height];
         newUV = new Vector2[Width * Height];
         newTriangles = new int[(Width - 1) * (Height - 1) * 6];
+        Bitmap = new System.Drawing.Bitmap(Width, Height, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale);
 
         Debug.Log(Width * Height);
         Debug.Log(newTriangles.Length);
@@ -115,14 +127,53 @@ public class DepthMesh : MonoBehaviour
         MyMesh.triangles = newTriangles;
     }
 
+    void CropImage()
+    {
+        for (int H = 0; H < Height; H++)
+        {
+            for (int W = 0; W < Width; W++)
+            {
+                int Index = GetArrayIndex(W, H);
+                short Value = (short)GetImageValue(W, H);
+                FilterdAndCroppedDepthImage[Index] = Value;
+            }
+        }
+    }
+
+    void FilerImage()
+    {
+        // Copy Image to Bitmap
+        System.Drawing.Rectangle ImageBounds = new System.Drawing.Rectangle(0, 0, Bitmap.Width, Bitmap.Height);
+        System.Drawing.Imaging.ImageLockMode Mode = System.Drawing.Imaging.ImageLockMode.ReadWrite;
+        System.Drawing.Imaging.PixelFormat Format = Bitmap.PixelFormat;
+        System.Drawing.Imaging.BitmapData BitmapData = Bitmap.LockBits(ImageBounds, Mode, Format);
+
+        System.IntPtr ptr = BitmapData.Scan0;
+
+        System.Runtime.InteropServices.Marshal.Copy(FilterdAndCroppedDepthImage, 0, ptr, FilterdAndCroppedDepthImage.Length);
+
+        Bitmap.UnlockBits(BitmapData);
+
+        //Apply Filter
+        Blur.ApplyInPlace(Bitmap);
+
+        //Copy Bitmap back to Image
+        BitmapData = Bitmap.LockBits(ImageBounds, Mode, Format);
+
+        ptr = BitmapData.Scan0;
+        System.Runtime.InteropServices.Marshal.Copy(ptr, FilterdAndCroppedDepthImage, 0, FilterdAndCroppedDepthImage.Length);
+
+        Bitmap.UnlockBits(BitmapData);
+    }
+
     void CalculateFloatValues()
     {
         for (int H = 0; H < Height; H++)
         {
             for (int W = 0; W < Width; W++)
             {
-                int ImageValue = GetImageValue(W, H);
                 int Index = GetArrayIndex(W, H);
+                int ImageValue = FilterdAndCroppedDepthImage[Index];
 
                 //Clamp Value
 
@@ -195,17 +246,27 @@ public class DepthMesh : MonoBehaviour
         newColors[Index] = new Color32(R, G, B, 255);
     }
 
-    int GetImageValue(int W, int H)
+    int GetImageIndex(int W, int H)
     {
         int ImageW = OffsetX + W;
         int ImageH = OffsetY + H;
 
         if ((ImageW < 0) || (ImageW > KinectWidth) || (ImageH < 0) || (ImageH > KinectHeight))
         {
+            return -1;
+        }
+
+        return ImageW + ImageH * KinectWidth;
+    }
+
+    int GetImageValue(int W, int H)
+    {
+        int Index = GetImageIndex(W, H);
+        if (Index < 0)
+        {
             return (int)short.MaxValue;
         }
 
-        int Index = ImageW + ImageH * KinectWidth;
         int Value = DepthImage[Index];
 
         if (Value == 0)
@@ -215,7 +276,7 @@ public class DepthMesh : MonoBehaviour
         else
         {
             return Value;
-        }
+        }    
     }
 
     /* Not needed since Unity provides a Recalculate Normals Funktion
