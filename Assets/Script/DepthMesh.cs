@@ -24,11 +24,13 @@ public class DepthMesh : MonoBehaviour
     public int Height = 240;
     public int OffsetX;
     public int OffsetY;
-    public int MinValue = 0;
-    public int MaxValue = short.MaxValue;
+    public int MinDepthValue = 0;
+    public int MaxDepthValue = short.MaxValue;
+    public float MeshHeigth;
 
-    short MinValueBuffer;
-    short MaxValueBuffer;
+
+    short MinDepthValueBuffer;
+    short MaxDepthValueBuffer;
     short[] DepthImage;
     short[] FilterdAndCroppedDepthImage;
     float[] FloatValues;
@@ -44,8 +46,6 @@ public class DepthMesh : MonoBehaviour
     {
         WidthBuffer = Width;
         HeightBuffer = Height;
-
-        
 
         MyMesh = new Mesh();
         GetComponent<MeshFilter>().mesh = MyMesh;
@@ -177,28 +177,28 @@ public class DepthMesh : MonoBehaviour
 
                 //Clamp Value
 
-                if (ImageValue > MaxValueBuffer)
+                if (ImageValue > MaxDepthValueBuffer)
                 {
-                    MaxValueBuffer = (short)Mathf.Clamp(ImageValue, ImageValue, short.MaxValue);
+                    MaxDepthValueBuffer = (short)Mathf.Clamp(ImageValue, ImageValue, short.MaxValue);
                 }
 
-                if (ImageValue < MinValueBuffer)
+                if (ImageValue < MinDepthValueBuffer)
                 {
-                    MinValueBuffer = (short)Mathf.Clamp(ImageValue, short.MinValue, ImageValue);
+                    MinDepthValueBuffer = (short)Mathf.Clamp(ImageValue, short.MinValue, ImageValue);
                 }
 
-                if (ImageValue > MaxValue)
+                if (ImageValue > MaxDepthValue)
                 {
-                    ImageValue = MaxValue;
+                    ImageValue = MaxDepthValue;
                 }
 
-                if (ImageValue < MinValue)
+                if (ImageValue < MinDepthValue)
                 {
-                    ImageValue = MinValue;
+                    ImageValue = MinDepthValue;
                 }
 
                 //Calculate
-                float FloatValue = (ImageValue - MinValue) / (float)(MaxValue - MinValue);
+                float FloatValue = (ImageValue - MinDepthValue) / (float)(MaxDepthValue - MinDepthValue);
                 FloatValues[Index] = FloatValue;
             }
         }
@@ -207,8 +207,8 @@ public class DepthMesh : MonoBehaviour
 
     void UpdateMesh()
     {
-        MinValueBuffer = short.MaxValue;
-        MaxValueBuffer = short.MinValue;
+        MinDepthValueBuffer = short.MaxValue;
+        MaxDepthValueBuffer = short.MinValue;
 
         for (int H = 0; H < Height; H++)
         {
@@ -232,7 +232,7 @@ public class DepthMesh : MonoBehaviour
         //newNormals[Index] = CalculateNormal(W, H, FloatValue);
 
         //Calc Position
-        newVertices[Index].z = FloatValue * 100;
+        newVertices[Index].z = FloatValue * MeshHeigth;
 
         //Calc Color
         float FloatValueClamped = Mathf.Clamp01(FloatValue);
