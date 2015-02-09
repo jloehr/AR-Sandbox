@@ -2,6 +2,7 @@
 	Properties {
 		_Water ("Water", 2D) = "white" {}
 		_Sand ("Sand", 2D) = "white" {}
+		_Grass ("Rock", 2D) = "white" {}
 		_Rock ("Rock", 2D) = "white" {}
 		_MinZ ("MinZ", Float) = 0
 		_MaxZ ("Max Z", Float) = 2000
@@ -16,6 +17,7 @@
      
             uniform sampler2D _Water;
             uniform sampler2D _Sand;
+            uniform sampler2D _Grass;
             uniform sampler2D _Rock;
 
             uniform float _MinZ;
@@ -33,7 +35,7 @@
 				fragmentInput o;
 				o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
                 o.texcoord = v.texcoord;
-				float Blend = v.vertex.z - _MinZ;
+				float Blend = _MaxZ - (v.vertex.z - _MinZ);
 				Blend = clamp(Blend / (_MaxZ - _MinZ), 0, 1);
 
 				o.blend.xyz = 0;
@@ -55,7 +57,7 @@
 
 			float4 frag (fragmentInput i) : COLOR0 
 			{ 	
-				float NumOfTextures = 3;
+				float NumOfTextures = 4;
 				float TextureFloat = i.blend.w * NumOfTextures;
 
 				if(TextureFloat < 1)
@@ -68,9 +70,16 @@
 				else if(TextureFloat < 2)
 				{
 					fixed4 SandColor = tex2D(_Sand, i.texcoord);
+					fixed4 GrassColor = tex2D(_Grass, i.texcoord);
+
+					return DoBlending(1, TextureFloat, SandColor, GrassColor);
+				} 
+				else if(TextureFloat < 3)
+				{
+					fixed4 GrassColor = tex2D(_Grass, i.texcoord);
 					fixed4 RockColor = tex2D(_Rock, i.texcoord);
 
-					return DoBlending(1, TextureFloat, SandColor, RockColor);
+					return DoBlending(2, TextureFloat, GrassColor, RockColor);
 				}
 				
 				fixed4 RockColor = tex2D(_Rock, i.texcoord);
