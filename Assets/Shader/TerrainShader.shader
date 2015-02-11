@@ -4,8 +4,8 @@
 		_Sand ("Sand", 2D) = "white" {}
 		_Grass ("Rock", 2D) = "white" {}
 		_Rock ("Rock", 2D) = "white" {}
-		_MinZ ("MinZ", Float) = 0
-		_MaxZ ("Max Z", Float) = 2000
+		_WaterLevel ("Water Level", Float) = 0
+		_LayerSize ("Layer Size", Float) = 20
 		_BlendRange ("Blend Range", Range(0, 0.5)) = 0.1
 	}
 	SubShader {
@@ -20,8 +20,8 @@
             uniform sampler2D _Grass;
             uniform sampler2D _Rock;
 
-            uniform float _MinZ;
-            uniform float _MaxZ;
+            uniform float _WaterLevel;
+            uniform float _LayerSize;
             uniform float _BlendRange;
 
 			struct fragmentInput {
@@ -32,11 +32,20 @@
       
 			fragmentInput vert (appdata_base v)
 			{
+				float NumOfTextures = 4;
 				fragmentInput o;
 				o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
                 o.texcoord = v.texcoord;
-				float Blend = _MaxZ - (v.vertex.z - _MinZ);
-				Blend = clamp(Blend / (_MaxZ - _MinZ), 0, 1);
+
+				//  |-----------|--------|--------|------------------|
+				//  +   Water   L   Sand    Green    Rock            0
+				//     |--------|--------|--------|--------|
+				//     0                                   1
+
+				float MinValue = _WaterLevel - (NumOfTextures - 1) * _LayerSize; 
+				float MaxValue = (_WaterLevel + _LayerSize); 
+				float Blend = MaxValue - v.vertex.z;
+				Blend = clamp(Blend / (NumOfTextures *_LayerSize), 0, 1);
 
 				o.blend.xyz = 0;
 				o.blend.w = Blend;
