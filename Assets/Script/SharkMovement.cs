@@ -24,13 +24,21 @@ public class SharkMovement : MonoBehaviour {
         CheckForTarget(Direction.magnitude);
 
         //Turning
-        /*Vector3 Forward = transform.rotation * Vector3.up;
-        Quaternion Rotation = Quaternion.FromToRotation(Forward, Direction);
-        float Angle;
-        Vector3 RotationAxis;
-        Rotation.ToAngleAxis(out Angle, out RotationAxis);
+        Vector3 Forward = transform.rotation * Vector3.forward;
+        transform.Rotate(Forward, TurnRate * Time.deltaTime);
+
+
+        //Movement
+        transform.Translate(Vector3.up * MovementSpeed * Time.deltaTime);
+
+        //Turning
+        //Vector3 Forward = transform.rotation * Vector3.up;
+        //Quaternion Rotation = Quaternion.FromToRotation(Forward, Direction);
+        //float Angle;
+        //Vector3 RotationAxis;
+        //Rotation.ToAngleAxis(out Angle, out RotationAxis);
         
-        Debug.Log(Angle);*/
+//        Debug.Log(Angle);
         //Movment
         //float Speed = MovementSpeed;
         //Vector3 Movement = Forward * Speed * Time.deltaTime;
