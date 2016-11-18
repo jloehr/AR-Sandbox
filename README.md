@@ -7,7 +7,7 @@ See the Project in action on [Youtube](https://www.youtube.com/playlist?list=PLi
 Otherwise there are some images in the project "Images" folder.
 
 ## Dependency 
-* [Unity3D 4.6.0](http://unity3d.com/)
+* [Unity3D 5.4.3](http://unity3d.com/)
 * Kinect SDK 1.8
 * Unity 3D Kinect Pugin by [Carnegie Mellon University](http://wiki.etc.cmu.edu/unity3d/index.php/Microsoft_Kinect_-_Microsoft_SDK)
 * [AForge.NET](http://www.aforgenet.com/)
@@ -51,10 +51,10 @@ You can adjust the Terrain Shader by setting the Water Level (World Space) and t
 
 ## Setup
 
-AForge needs the System.Drawing.dll. Copy it from System32 into the project folder and into the Unity Editor folder.
+AForge needs the System.Drawing.dll. Copy it from "PathToYourUnityInstallation/Editor/Data/Mono/lib/mono/2.0" into "ProjectFolder/Assets".
 
 For the Kinect Plugin see their site for instructions.
-However have the Kinect SDK 1.8 installed and the Kinect pluged in before startung Unity3D.
+However have the Kinect SDK 1.8 installed and the Kinect pluged in before starting Unity3D.
 
 Arrange the Projector and the Kinect so they cover the sandbox. We used a giant mirror on the wall (see the Project Images).
 Open the "DepthMesh" scene in Unity and check "Maximize at Play" button. Hit play and get the "Play" View on the Projector.
