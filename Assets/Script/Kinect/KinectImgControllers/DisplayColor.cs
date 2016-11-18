@@ -14,7 +14,7 @@ public class DisplayColor : MonoBehaviour {
 		kinect = devOrEmu.getKinect();
 		//tex = new Texture2D(640,480,TextureFormat.ARGB32,false);
 		tex = new Texture2D(320,240,TextureFormat.ARGB32,false);
-		renderer.material.mainTexture = tex;
+		GetComponent<Renderer>().material.mainTexture = tex;
 		
 	}
 	

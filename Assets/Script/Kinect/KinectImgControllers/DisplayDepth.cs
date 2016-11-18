@@ -10,7 +10,7 @@ public class DisplayDepth : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tex = new Texture2D(320,240,TextureFormat.ARGB32,false);
-		renderer.material.mainTexture = tex;
+		GetComponent<Renderer>().material.mainTexture = tex;
 	}
 	
 	// Update is called once per frame
