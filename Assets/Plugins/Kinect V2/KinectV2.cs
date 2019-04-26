@@ -8,28 +8,12 @@ public class KinectV2 : DepthSensorBase
     private Windows.Kinect.KinectSensor sensor;
     private DepthFrameReader reader;
     private ushort[] data;
+    private int width;
+    private int heigth;
 
-    public override int Width
-    {
-        get
-        {
-            if (sensor != null)
-                return sensor.DepthFrameSource.FrameDescription.Width;
+    public override int Width => width;
 
-            return 0;
-        }
-    }
-
-    public override int Height
-    {
-        get
-        {
-            if (sensor != null)
-                return sensor.DepthFrameSource.FrameDescription.Height;
-
-            return 0;
-        }
-    }
+    public override int Height => heigth;
 
     public override ushort[] depthImage
     {
@@ -62,6 +46,32 @@ public class KinectV2 : DepthSensorBase
         {
             reader = sensor.DepthFrameSource.OpenReader();
             data = new ushort[sensor.DepthFrameSource.FrameDescription.LengthInPixels];
+            width = sensor.DepthFrameSource.FrameDescription.Width;
+            heigth = sensor.DepthFrameSource.FrameDescription.Height;
+
+            if (!sensor.IsOpen)
+                sensor.Open();
+        }
+        else
+        {
+            Debug.LogErrorFormat("Failed to acquire Kinect Sensor!");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (reader != null)
+        {
+            reader.Dispose();
+            reader = null;
+        }
+
+        if (sensor != null)
+        {
+            if (sensor.IsOpen)
+                sensor.Close();
+
+            sensor = null;
         }
     }
 }
