@@ -50,6 +50,8 @@ public class DepthMesh : MonoBehaviour
         GetComponent<MeshFilter>().mesh = MyMesh;
 
         SetupArrays();
+
+        Debug.LogFormat("Depth Mesh is using '{0}' as depth source.", depthSensor.name);
     }
 
     // Update is called once per frame
