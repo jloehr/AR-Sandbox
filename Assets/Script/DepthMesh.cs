@@ -2,12 +2,11 @@
 using System.Collections;
 using AForge.Imaging.Filters;
 using AForge.Imaging;
+using System;
 
 public class DepthMesh : MonoBehaviour
 {
-    public DepthWrapper KinectDepth;
-    int KinectWidth = 320;
-    int KinectHeight = 240;
+    public DepthSensorBase depthSensor;
     [HideInInspector]
     public Vector3[] newVertices;
     [HideInInspector]
@@ -25,14 +24,14 @@ public class DepthMesh : MonoBehaviour
     public int OffsetX;
     public int OffsetY;
     public int MinDepthValue = 0;
-    public int MaxDepthValue = short.MaxValue;
+    public int MaxDepthValue = ushort.MaxValue;
     public float MeshHeigth;
 
 
-    short MinDepthValueBuffer;
-    short MaxDepthValueBuffer;
-    short[] DepthImage;
-    short[] FilterdAndCroppedDepthImage;
+    ushort MinDepthValueBuffer;
+    ushort MaxDepthValueBuffer;
+    ushort[] DepthImage;
+    ushort[] FilterdAndCroppedDepthImage;
     float[] FloatValues;
 
     int WidthBuffer;
@@ -56,9 +55,9 @@ public class DepthMesh : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (KinectDepth.pollDepth())
+        if (depthSensor.pollDepth())
         {
-            DepthImage = KinectDepth.depthImg;
+            DepthImage = depthSensor.depthImage;
             CheckArrays();
             CropImage();
             FilerImage();
@@ -79,7 +78,7 @@ public class DepthMesh : MonoBehaviour
 
     void SetupArrays()
     {
-        FilterdAndCroppedDepthImage = new short[Width * Height];
+        FilterdAndCroppedDepthImage = new ushort[Width * Height];
         FloatValues = new float[Width * Height];
         newVertices = new Vector3[Width * Height];
         newNormals = new Vector3[Width * Height];
@@ -134,7 +133,7 @@ public class DepthMesh : MonoBehaviour
             for (int W = 0; W < Width; W++)
             {
                 int Index = GetArrayIndex(W, H);
-                short Value = (short)GetImageValue(W, H);
+                ushort Value = (ushort)GetImageValue(W, H);
                 FilterdAndCroppedDepthImage[Index] = Value;
             }
         }
@@ -142,6 +141,7 @@ public class DepthMesh : MonoBehaviour
 
     void FilerImage()
     {
+
         // Copy Image to Bitmap
         System.Drawing.Rectangle ImageBounds = new System.Drawing.Rectangle(0, 0, Bitmap.Width, Bitmap.Height);
         System.Drawing.Imaging.ImageLockMode Mode = System.Drawing.Imaging.ImageLockMode.ReadWrite;
@@ -149,8 +149,8 @@ public class DepthMesh : MonoBehaviour
         System.Drawing.Imaging.BitmapData BitmapData = Bitmap.LockBits(ImageBounds, Mode, Format);
 
         System.IntPtr ptr = BitmapData.Scan0;
-
-        System.Runtime.InteropServices.Marshal.Copy(FilterdAndCroppedDepthImage, 0, ptr, FilterdAndCroppedDepthImage.Length);
+        short[] shortBuffer = Array.ConvertAll(FilterdAndCroppedDepthImage, (value) => (short)value);
+        System.Runtime.InteropServices.Marshal.Copy(shortBuffer, 0, ptr, shortBuffer.Length);
 
         Bitmap.UnlockBits(BitmapData);
 
@@ -161,7 +161,8 @@ public class DepthMesh : MonoBehaviour
         BitmapData = Bitmap.LockBits(ImageBounds, Mode, Format);
 
         ptr = BitmapData.Scan0;
-        System.Runtime.InteropServices.Marshal.Copy(ptr, FilterdAndCroppedDepthImage, 0, FilterdAndCroppedDepthImage.Length);
+        System.Runtime.InteropServices.Marshal.Copy(ptr, shortBuffer, 0, shortBuffer.Length);
+        FilterdAndCroppedDepthImage = Array.ConvertAll(shortBuffer, (value) => (ushort)value);
 
         Bitmap.UnlockBits(BitmapData);
     }
@@ -179,12 +180,12 @@ public class DepthMesh : MonoBehaviour
 
                 if (ImageValue > MaxDepthValueBuffer)
                 {
-                    MaxDepthValueBuffer = (short)Mathf.Clamp(ImageValue, ImageValue, short.MaxValue);
+                    MaxDepthValueBuffer = (ushort)Mathf.Clamp(ImageValue, ImageValue, ushort.MaxValue);
                 }
 
                 if (ImageValue < MinDepthValueBuffer)
                 {
-                    MinDepthValueBuffer = (short)Mathf.Clamp(ImageValue, short.MinValue, ImageValue);
+                    MinDepthValueBuffer = (ushort)Mathf.Clamp(ImageValue, ushort.MinValue, ImageValue);
                 }
 
                 if (ImageValue > MaxDepthValue)
@@ -207,8 +208,8 @@ public class DepthMesh : MonoBehaviour
 
     void UpdateMesh()
     {
-        MinDepthValueBuffer = short.MaxValue;
-        MaxDepthValueBuffer = short.MinValue;
+        MinDepthValueBuffer = ushort.MaxValue;
+        MaxDepthValueBuffer = ushort.MinValue;
 
         for (int H = 0; H < Height; H++)
         {
@@ -251,12 +252,12 @@ public class DepthMesh : MonoBehaviour
         int ImageW = OffsetX + W;
         int ImageH = OffsetY + H;
 
-        if ((ImageW < 0) || (ImageW > KinectWidth) || (ImageH < 0) || (ImageH > KinectHeight))
+        if ((ImageW < 0) || (ImageW > depthSensor.Width) || (ImageH < 0) || (ImageH > depthSensor.Height))
         {
             return -1;
         }
 
-        return ImageW + ImageH * KinectWidth;
+        return ImageW + ImageH * depthSensor.Width;
     }
 
     int GetImageValue(int W, int H)
@@ -264,14 +265,14 @@ public class DepthMesh : MonoBehaviour
         int Index = GetImageIndex(W, H);
         if (Index < 0)
         {
-            return (int)short.MaxValue;
+            return (int)ushort.MaxValue;
         }
 
         int Value = DepthImage[Index];
 
         if (Value == 0)
         {
-            return (int)short.MaxValue;
+            return (int)ushort.MaxValue;
         }
         else
         {
@@ -338,7 +339,7 @@ public class DepthMesh : MonoBehaviour
         return W + H * Width;
     }
 
-    int[] ShortToRGBA(short[] DepthImage)
+    int[] ShortToRGBA(ushort[] DepthImage)
     {
         int[] ImageData = new int[DepthImage.Length];
 
