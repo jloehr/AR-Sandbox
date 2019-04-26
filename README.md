@@ -6,13 +6,42 @@ Inspiried by [SARndbox](http://idav.ucdavis.edu/~okreylos/ResDev/SARndbox/)
 See the Project in action on [Youtube](https://www.youtube.com/playlist?list=PLiYkNDKSkCd4wgPixZNUtXTdhxdEhq7Vk).
 Otherwise there are some images in the project "Images" folder.
 
-## Dependency 
-* [Unity3D 5.4.3](http://unity3d.com/)
+## Requirements 
+
+* [Unity 2019.1.0f2](http://unity3d.com/)
 * Kinect SDK 1.8
+
+# Dependencies
+
 * Unity 3D Kinect Pugin by [Carnegie Mellon University](http://wiki.etc.cmu.edu/unity3d/index.php/Microsoft_Kinect_-_Microsoft_SDK)
 * [AForge.NET](http://www.aforgenet.com/)
 
-The Plugin as well as AForge are already included in the project.
+The Kinect and AForge plugin are already included in this project.
+
+## Setup
+
+AForge needs the System.Drawing.dll. Copy it from "PathToYourUnityInstallation/Editor/Data/Mono/lib/mono/2.0" into "ProjectFolder/Assets".
+
+For the Kinect Plugin see their site for instructions.
+However have the Kinect SDK 1.8 installed and the Kinect pluged in before starting Unity3D.
+
+Arrange the Projector and the Kinect so they cover the sandbox. We used a giant mirror on the wall (see the Project Images).
+Open the "DepthMesh" scene in Unity and check "Maximize at Play" button. Hit play and get the "Play" View on the Projector.
+
+## Calibration
+
+Originally we tried to use QR-Marker. Since they didn't work with our mirror, we only have trivial manual calibration.
+The MinDepth and MaxValue values as well as the Terrain Shader values are depending on the distance of the Kinect to the Sandbox.
+
+### Cropping
+
+Place 4 Clicks in the Play-View clockwise, starting Top-Left, to crop the Mesh.
+Otherwise you can adjust the cropping values directly on the DepthMesh component on the DepthMesh GameObject.
+
+### Positioning the Image
+
+Use WASD to move the Mesh on the screen. With QE you can scale the Mesh up and down.
+(In fact you move the camera and adjust its size)
 
 ## Content
 
@@ -48,28 +77,3 @@ Use the default Unity Defuse Shader to see the Mesh in Unity with some shadowing
 Vertex Color was our old testing Shader for colors.
 Terrain Shader is our self written Shader to display the Mesh with actual Textures.
 You can adjust the Terrain Shader by setting the Water Level (World Space) and the Layer Width, as well as the Blending between two layer.
-
-## Setup
-
-AForge needs the System.Drawing.dll. Copy it from "PathToYourUnityInstallation/Editor/Data/Mono/lib/mono/2.0" into "ProjectFolder/Assets".
-
-For the Kinect Plugin see their site for instructions.
-However have the Kinect SDK 1.8 installed and the Kinect pluged in before starting Unity3D.
-
-Arrange the Projector and the Kinect so they cover the sandbox. We used a giant mirror on the wall (see the Project Images).
-Open the "DepthMesh" scene in Unity and check "Maximize at Play" button. Hit play and get the "Play" View on the Projector.
-
-## Calibration
-
-Originally we tried to use QR-Marker. Since they didn't work with our mirror, we only have trivial manual calibration.
-The MinDepth and MaxValue values as well as the Terrain Shader values are depending on the distance of the Kinect to the Sandbox.
-
-### Cropping
-
-Place 4 Clicks in the Play-View clockwise, starting Top-Left, to crop the Mesh.
-Otherwise you can adjust the cropping values directly on the DepthMesh component on the DepthMesh GameObject.
-
-### Positioning the Image
-
-Use WASD to move the Mesh on the screen. With QE you can scale the Mesh up and down.
-(In fact you move the camera and adjust its size)
