@@ -54,3 +54,7 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+
+# Project specific files
+System.Drawing.dll
+System.Drawing.dll.meta
