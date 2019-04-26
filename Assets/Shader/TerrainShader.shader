@@ -1,4 +1,6 @@
-﻿Shader "Custom/TerrainShader" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/TerrainShader" {
 	Properties {
 		_Water ("Water", 2D) = "white" {}
 		_Sand ("Sand", 2D) = "white" {}
@@ -34,7 +36,7 @@
 			{
 				float NumOfTextures = 4;
 				fragmentInput o;
-				o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+				o.pos = UnityObjectToClipPos (v.vertex);
                 o.texcoord = v.texcoord;
 
 				//  |-----------|--------|--------|------------------|
