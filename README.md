@@ -12,7 +12,7 @@ Otherwise there are some images in the project "Images" folder.
 * Kinect v1 sensor and [Kinect for Windows SDK v1.8](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
 * __OR__ Kinect v2 sensor and [Kinect for Windows SDK 2.0](https://go.microsoft.com/fwlink/p/?LinkId=403899)
 
-# Dependencies
+## Dependencies
 
 __*The Kinect and AForge plugins are already included in this project.*__
 
