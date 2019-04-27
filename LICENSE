@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2015 Julian Löhr
+Copyright (c) 2019 Julian Löhr
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,4 +20,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Excluded from this License are the Unity 3D Kinect Pugin (\Assets\Script\Kinect), the AForge.NET Library (\Assets\Asset\Plugins\AForge2.2.5) and the Unity Visual Studio Plugin (\Assets\UnityVS)
+Excluded from this License are the Unity 3D Kinect Pugin (\Assets\Plugins\Kinect V1), the Kinect for Windows 2.0 Plugin (\Assets\Plugins\Kinect V2) and the AForge.NET Library (\Assets\Plugins\AForge2.2.5).
