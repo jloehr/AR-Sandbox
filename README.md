@@ -9,24 +9,35 @@ Otherwise there are some images in the project "Images" folder.
 ## Requirements 
 
 * [Unity 2019.1.0f2](http://unity3d.com/)
-* Kinect SDK 1.8
+* Kinect v1 sensor and [Kinect for Windows SDK v1.8](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
+* __OR__ Kinect v2 sensor and [Kinect for Windows SDK 2.0](https://go.microsoft.com/fwlink/p/?LinkId=403899)
 
 # Dependencies
 
-* Unity 3D Kinect Pugin by [Carnegie Mellon University](http://wiki.etc.cmu.edu/unity3d/index.php/Microsoft_Kinect_-_Microsoft_SDK)
-* [AForge.NET](http://www.aforgenet.com/)
+__*The Kinect and AForge plugins are already included in this project.*__
 
-The Kinect and AForge plugin are already included in this project.
+* Unity 3D Kinect Pugin by [Carnegie Mellon University](http://wiki.etc.cmu.edu/unity3d/index.php/Microsoft_Kinect_-_Microsoft_SDK)
+* [Kinect for Windows Unity Plugin 2.0](https://go.microsoft.com/fwlink/p/?LinkId=513177)
+* [AForge.NET](http://www.aforgenet.com/)
 
 ## Setup
 
 AForge needs the System.Drawing.dll. Copy it from "PathToYourUnityInstallation/Editor/Data/Mono/lib/mono/2.0" into "ProjectFolder/Assets".
 
-For the Kinect Plugin see their site for instructions.
-However have the Kinect SDK 1.8 installed and the Kinect pluged in before starting Unity3D.
-
 Arrange the Projector and the Kinect so they cover the sandbox. We used a giant mirror on the wall (see the Project Images).
-Open the "DepthMesh" scene in Unity and check "Maximize at Play" button. Hit play and get the "Play" View on the Projector.
+Open the "DepthMesh" scene in Unity. Have "Maximize at Play" enabled. Hit play and get the "Play" View on the Projector.
+
+### Kinect V2
+
+Have the Kinect SDK 2.0 installed and use the verifier to check that the Kinect sensor is working.
+
+The Kinect V2 sensor is enabled and configured by default.
+
+### Kinect V1
+
+For the Kinect Plugin see their site for instructions. Have the Kinect SDK 1.8 installed and the Kinect pluged in before starting Unity.
+
+Per default the "Kinect V2" sensor is enabled. In the scene hierachy disable the "Kinect V2" gameobject and enable "Kinect V1". Select the "DepthMesh" gameobject and set "Depth Sensor" to the enabeld "Kinect V1" gameobject.
 
 ## Calibration
 
